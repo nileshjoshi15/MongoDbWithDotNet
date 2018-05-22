@@ -14,12 +14,12 @@ namespace MongoDbBasic
             {
                 Person p = new Person
                 {
-                    FirstName = "Test1",
-                    LastName = "Test Last"
+                    FirstName = "Test12",
+                    LastName = "Test Last2"
                 };
 
                 //MainAsync(p).Wait();
-                GetAndPrintPerson("5b023d5168b7fc1c9032ead1").Wait();
+                //GetAndPrintPerson("5b023d5168b7fc1c9032ead1").Wait();
                 GetAllPeople().Wait();
                 Console.ReadKey();
             }
@@ -33,9 +33,6 @@ namespace MongoDbBasic
         static async Task MainAsync(Person p)
         {
             await personRepository.SaveAsync(p);
-
-            var personFromDatabase = await personRepository.GetByIdAsync(p.Id);
-
         }
         static async Task GetAndPrintPerson(string id)
         {
@@ -45,7 +42,7 @@ namespace MongoDbBasic
 
         static async Task GetAllPeople()
         {
-            var people = await personRepository.FindAllAsync();
+            var people = await personRepository.FindAllAsyncNew();
             foreach (var pn in people)
             {
                 Console.WriteLine($"{pn.FirstName}, {pn.LastName}, id: {pn.Id}");

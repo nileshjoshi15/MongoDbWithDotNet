@@ -16,6 +16,7 @@ namespace MongoDbBasic.Data
     {
         protected abstract IMongoCollection<TEntity> Collection { get; }
 
+
         public virtual async Task<TEntity> GetByIdAsync(string id)
         {
             return await Collection.Find(x => x.Id.Equals(id)).FirstOrDefaultAsync();
@@ -28,7 +29,7 @@ namespace MongoDbBasic.Data
                 entity.Id = ObjectId.GenerateNewId().ToString();
             }
 
-            await Collection.ReplaceOneAsync(
+            await Collection .ReplaceOneAsync(
                 x => x.Id.Equals(entity.Id),
                 entity,
                 new UpdateOptions
@@ -51,7 +52,14 @@ namespace MongoDbBasic.Data
 
         public virtual async Task<ICollection<TEntity>> FindAllAsync()
         {
+            
              return await Collection.AsQueryable<TEntity>().ToListAsync();
+        }
+
+
+        public virtual async Task<ICollection<TEntity>> FindAllAsyncNew()
+        {
+            return await Collection.Find(new BsonDocument()).ToListAsync();
         }
 
     }

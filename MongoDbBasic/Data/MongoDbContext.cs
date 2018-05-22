@@ -1,10 +1,12 @@
 ﻿using MongoDB.Driver;
+using MongoDbBasic.Domain;
 using System.Configuration;
 
 namespace MongoDbBasic.Data
 {
     public class MongoDbContext
     {
+        private IMongoDatabase MongoDatabase { get; }
         public MongoDbContext()
             : this("MongoDb")
         {
@@ -19,6 +21,7 @@ namespace MongoDbBasic.Data
             MongoDatabase = client.GetDatabase(mongoUrl.DatabaseName);
         }
 
-        public IMongoDatabase MongoDatabase { get; }
+       
+        public IMongoCollection<Person> people => MongoDatabase.GetCollection<Person>("People");
     }
 }
